@@ -86,7 +86,7 @@ export const authApi = {
 
 export const usersApi = {
   async register(data: RegisterData): Promise<User> {
-    const response = await fetch(`${API_BASE_URL}/users`, {
+    const response = await fetch(`${API_BASE_URL}/Users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export const usersApi = {
 
   async getUser(id: string): Promise<User> {
     const token = getToken();
-    const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/Users/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -110,7 +110,7 @@ export const usersApi = {
 
   async updateUser(id: string, data: Partial<RegisterData>): Promise<User> {
     const token = getToken();
-    const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/Users/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ export const usersApi = {
 
   async deleteUser(id: string): Promise<void> {
     const token = getToken();
-    const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/Users/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
