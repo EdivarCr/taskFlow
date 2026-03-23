@@ -11,7 +11,7 @@ RUN npm ci
 
 # Copiar código fonte
 COPY . .
-
+ENV VITE_API_BASE_URL=https://fastapi-zero-1.onrender.com
 # Build da aplicação
 RUN npm run build
 
