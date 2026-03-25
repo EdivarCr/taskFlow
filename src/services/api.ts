@@ -189,7 +189,7 @@ export const todosApi = {
 
   async delete(id: string): Promise<void> {
     const token = getToken();
-    const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/todos/${id}/trash`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -200,4 +200,54 @@ export const todosApi = {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
   },
+
+   async listTrash(filters?: TodoFilters): Promise<{ todos: Todo[] }> {
+    const token = getToken();
+    const params = new URLSearchParams();
+
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          params.append(key, value.toString());
+        }
+      });
+    }
+
+    const url = `${API_BASE_URL}/todos/todo_trash${params.toString() ? `?${params.toString()}` : ''}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    return handleResponse(response);
+  },
+
+  async restore(id: string): Promise<Todo> {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/todos/${id}/restore`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    return handleResponse(response);
+  },
+
+  async permanentDelete(id: string): Promise<void> {
+    const token = getToken();
+    const response = await fetch(`${API_BASE_URL}/todos/${id}/permanent`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  },
+
 };
